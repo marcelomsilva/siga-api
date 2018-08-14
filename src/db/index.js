@@ -1,9 +1,10 @@
+'use strict';
 const mongoose = require('mongoose')
-const urlDb = 'http://localhost/siga'
-mongoose.connect(urlDb)
+const urlDb = 'mongodb://localhost:27017/siga'
+mongoose.connect(urlDb,{useNewUrlParser: true})
 mongoose.Promise = Promise
 
-const Employee = require('../db/models/employee')
+const Employee = require('./models/employee')
 
 module.exports = {
     Employee: Employee

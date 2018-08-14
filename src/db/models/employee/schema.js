@@ -1,6 +1,7 @@
+'use strict';
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
-const Role = require('../role')
+const Role = require('../role/index')
 const schema = Schema({
     registration: {
         type: Number,
@@ -11,10 +12,13 @@ const schema = Schema({
         require
     },
     role: {
-        type: Role
+        type: Schema.Types.String,
+        ref: 'Role'
     },
     isActive: {
         type: Boolean,
         require
     }
 });
+
+module.exports = schema;

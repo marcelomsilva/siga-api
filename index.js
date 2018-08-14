@@ -1,3 +1,4 @@
+'use strict';
 const express = require('express')
 const app = new express()
 const bodyParser = require('body-parser')
@@ -7,8 +8,8 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cors())
 
-app.use('',(req,res)=>{
-    res.json({message:'ddasdadadsad'});
-})
+const Employee = require('./src/routes/employee')
+
+app.use('/employee', Employee)
 
 app.listen(3000)
