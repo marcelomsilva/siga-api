@@ -5,7 +5,6 @@ const db = require('../db/index')
 
 function register(req,res) {
     let Employee = db.Employee;
-    console.log(req.body);
     let employee = new Employee(req.body);
     employee.validate()
         .then(() => employee.save())

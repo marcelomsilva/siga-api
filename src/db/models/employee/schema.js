@@ -12,11 +12,11 @@ const schema = Schema({
         require
     },
     role: {
-        type: Schema.Types.String,
+        type: Schema.Types.ObjectId,
         ref: 'Role'
     },
-    isActive: {
-        type: Boolean,
+    status: {
+        type: String,
         require
     }
 });
