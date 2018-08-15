@@ -6,10 +6,12 @@ mongoose.Promise = Promise
 
 const Employee = require('./models/employee')
 const Role = require('./models/role')
+const Status = require('./models/status')
 
 module.exports = {
     Employee: Employee,
-    Role: Role
+    Role: Role,
+    Status: Status
 }
 
 mongoose.connection.once('open',()=>{

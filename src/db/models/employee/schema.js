@@ -20,5 +20,4 @@ const schema = Schema({
         require
     }
 });
-
 module.exports = schema;
