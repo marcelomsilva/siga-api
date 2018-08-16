@@ -3,7 +3,7 @@ const express = require('express')
 const router = express.Router()
 const db = require('../db/index')
 
-
+//Register new Role
 function register(req,res) {
     let Role = db.Role;
     let role = new Role(req.body);
@@ -17,6 +17,7 @@ function register(req,res) {
         });
 }
 
+// Get all Roles
 function getAll(req,res) {
     let Role = db.Role;
     Role.find()

@@ -3,7 +3,7 @@ const express = require('express')
 const router = express.Router()
 const db = require('../db/index')
 
-
+// Register new Status
 function register(req,res) {
     let Status = db.Status;
     let status = new Status(req.body);
@@ -17,6 +17,7 @@ function register(req,res) {
         });
 }
 
+// Get all Status
 function getAll(req,res) {
     let Status = db.Status;
     Status.find()

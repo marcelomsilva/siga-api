@@ -3,6 +3,7 @@ const express = require('express')
 const router = express.Router()
 const db = require('../db/index')
 
+//Register new Employee//
 function register(req,res) {
     let Employee = db.Employee;
     let employee = new Employee(req.body);
@@ -16,6 +17,7 @@ function register(req,res) {
         });
 }
 
+//Get All Employees
 function getAll(req,res) {
     let Employee = db.Employee;
     Employee.find()
