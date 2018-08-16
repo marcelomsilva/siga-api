@@ -16,8 +16,8 @@ const schema = Schema({
         ref: 'Role'
     },
     status: {
-        type: String,
-        require
+        type: Schema.Types.ObjectId,
+        ref: 'Status'
     }
 });
 module.exports = schema;
