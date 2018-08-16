@@ -16,6 +16,16 @@ function register(req,res) {
         });
 }
 
+function getAll(req,res) {
+    let Employee = db.Employee;
+    Employee.find()
+        .then(employees => {
+            if(!employees) res.sendStatus(404);
+            else return res.status(200).json(employees);
+        });
+}
+
 router.post('/register', register)
+router.get('', getAll)
 
 module.exports = router
