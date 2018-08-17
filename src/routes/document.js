@@ -1,0 +1,32 @@
+'use strict';
+const express = require('express')
+const router = express.Router()
+const db = require('../db/index')
+
+// Register new Document
+function register(req,res) {
+    let Document = db.Document;
+    let document = new Document(req.body);
+    document.validate()
+        .then(() => {document.save()})
+        .then(() => {
+            return res.status(200).json({id:document._id});
+        })
+        .catch(error => {
+            return res.status(400).json({error:error});
+        });
+}
+
+function getAll(req,res) {
+    let Document = db.Document;
+    Document.find()
+    .then(documents => {
+        if(!documents) res.sendStatus(404);
+        else return res.status(200).json(documents);
+    });
+}
+
+router.post('/register', register)
+router.get('', getAll)
+
+module.exports = router
