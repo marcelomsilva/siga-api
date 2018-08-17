@@ -3,7 +3,7 @@ const express = require('express')
 const router = express.Router()
 const db = require('../db/index')
 
-//Register new Role
+// Register new Role
 function register(req,res) {
     let Role = db.Role;
     let role = new Role(req.body);
@@ -28,7 +28,17 @@ function getAll(req,res) {
     );
 }
 
+function getById(req,res) {
+    let Role = db.Role;
+    Role.findById(req.params.id)
+        .then(role => {
+            if(!role) res.sendStatus(404);
+            else return res.status(200).json(role);
+        });
+}
+
 router.post('/register', register)
 router.get('', getAll)
+router.get('/:id', getById)
 
 module.exports = router

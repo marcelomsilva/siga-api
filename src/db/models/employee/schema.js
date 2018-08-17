@@ -2,6 +2,9 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 const Role = require('../role/index')
+const Status = require('../status/index')
+const RoleSchema = mongoose.model('Role').schema
+const StatusSchema = mongoose.model('Status').schema
 const schema = Schema({
     registration: {
         type: Number,
@@ -11,13 +14,7 @@ const schema = Schema({
         type: String,
         require
     },
-    role: {
-        type: Schema.Types.ObjectId,
-        ref: 'Role'
-    },
-    status: {
-        type: Schema.Types.ObjectId,
-        ref: 'Status'
-    }
+    role: RoleSchema,
+    status: StatusSchema
 });
 module.exports = schema;
