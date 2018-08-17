@@ -7,13 +7,15 @@ mongoose.Promise = Promise
 const Employee = require('./models/employee')
 const Role = require('./models/role')
 const Status = require('./models/status')
-const Document = require('./models/document')
+const Documents = require('./models/document')
+const Absence = require('./models/')
 
 module.exports = {
     Employee: Employee,
     Role: Role,
     Status: Status,
-    Document: Document
+    Document: Documents,
+    Absence: Absence
 }
 
 mongoose.connection.once('open',()=>{

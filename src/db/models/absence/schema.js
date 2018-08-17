@@ -1,0 +1,12 @@
+'use strict';
+const mongoose = require('mongoose')
+const Schema = mongoose.Schema
+const Employee = require('../employee/index')
+const Event = require('../event/index')
+const SchemaEmployee = mongoose.model('Employee').schema
+const SchemaEvent = mongoose.model('Event').schema
+const schema = Schema({
+    employee: SchemaEmployee,
+    event: [SchemaEvent]
+});
+module.exports = schema;
