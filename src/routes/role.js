@@ -28,6 +28,7 @@ function getAll(req,res) {
     );
 }
 
+// Get a Role by Id
 function getById(req,res) {
     let Role = db.Role;
     Role.findById(req.params.id)

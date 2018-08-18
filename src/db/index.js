@@ -8,7 +8,7 @@ const Employee = require('./models/employee')
 const Role = require('./models/role')
 const Status = require('./models/status')
 const Documents = require('./models/document')
-const Absence = require('./models/')
+const Absence = require('./models/absence')
 
 module.exports = {
     Employee: Employee,
