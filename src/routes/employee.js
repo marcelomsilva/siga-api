@@ -27,7 +27,29 @@ function getAll(req,res) {
         });
 }
 
+// Get Employee By Id
+function getById(req,res) {
+    let Employee = db.Employee;
+    Employee.findById(req.params.id)
+    .then(employee => {
+        if(!employee) res.sendStatus(404);
+        else return res.status(200).json(employee);
+    });
+}
+
+function updateById(req,res) {
+    let Employee = db.Employee;
+    Employee.findByIdAndUpdate(req.params.id,req.body)
+    .then(employee => {
+        if(!employee) res.sendStatus(404);
+        else return res.status(200).json(employee);
+    });
+}
+
+
 router.post('/register', register)
 router.get('', getAll)
+router.get('/:id', getById)
+router.post('/:id', updateById)
 
 module.exports = router
