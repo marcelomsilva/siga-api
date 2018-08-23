@@ -7,6 +7,6 @@ const SchemaEmployee = mongoose.model('Employee').schema
 const SchemaEvent = mongoose.model('Event').schema
 const schema = Schema({
     employee: SchemaEmployee,
-    event: [SchemaEvent]
+    events: [SchemaEvent]
 });
 module.exports = schema;
