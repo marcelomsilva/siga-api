@@ -22,5 +22,6 @@ app.use('/status', Status)
 app.use('/document', Documents)
 app.use('/documents', Documents)
 app.use('/absence', Absence)
+app.use('/absences', Absence)
 
 app.listen(3000)

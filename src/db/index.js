@@ -9,13 +9,15 @@ const Role = require('./models/role')
 const Status = require('./models/status')
 const Documents = require('./models/document')
 const Absence = require('./models/absence')
+const User = require('./models/user')
 
 module.exports = {
     Employee: Employee,
     Role: Role,
     Status: Status,
     Document: Documents,
-    Absence: Absence
+    Absence: Absence,
+    User: User
 }
 
 mongoose.connection.once('open',()=>{

@@ -29,5 +29,6 @@ function getAll(req,res) {
 }
 
 router.post('/register', register)
+router.get('', getAll)
 
 module.exports = router
