@@ -6,8 +6,8 @@ const schema = Schema({
         type: String,
         require
     },
-    description: {
-        type: String,
+    branchLine: {
+        type: Number,
     }
 });
-module.exports = schema;
+module.exports = schema
