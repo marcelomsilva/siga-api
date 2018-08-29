@@ -2,6 +2,10 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 const schema = Schema({
+    registration: {
+        type: Number,
+        require
+    },
     name: {
         type: String,
         require
@@ -15,6 +19,14 @@ const schema = Schema({
         require
     },
     isActive: {
+        type: Boolean,
+        require
+    },
+    isLeader: {
+        type: Boolean,
+        require
+    },
+    isAdmin: {
         type: Boolean,
         require
     }
