@@ -50,8 +50,17 @@ function getUser(req,res) {
     }
 }
 
+function getAll(req,res) {
+    let User = db.User;
+    User.find()
+        .then(users =>{
+            if(!users) res.sendStatus(404);
+            else return res.status(200).json(users);
+        });
+}
 
 router.post('/register', register)
-router.get('login', getUser)
+router.get('/me', getUser)
+router.get('', getAll)
 
 module.exports = router

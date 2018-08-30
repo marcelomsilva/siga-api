@@ -6,7 +6,10 @@ const cors = require('cors')
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
-app.use(cors())
+app.use(cors({
+    origin:['http://localhost:4200','http://127.0.0.1:4200',],
+    credentials:true
+}));
 
 const Employee = require('./src/routes/employee')
 const Role = require('./src/routes/role')
@@ -15,6 +18,7 @@ const Documents = require('./src/routes/document')
 const Absence = require('./src/routes/absence')
 const Department = require('./src/routes/department')
 const User = require('./src/routes/user')
+const Login = require('./src/routes/login')
 
 app.use('/employee', Employee)
 app.use('/employees', Employee)
@@ -29,5 +33,6 @@ app.use('/department', Department)
 app.use('/departments', Department)
 app.use('/users', User)
 app.use('/user', User)
+app.use('/login', Login)
 
 app.listen(3000)
