@@ -3,8 +3,10 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 const Role = require('../role/index')
 const Status = require('../status/index')
+const Department = require('../department/index')
 const RoleSchema = mongoose.model('Role').schema
 const StatusSchema = mongoose.model('Status').schema
+const DepartmentSchema = mongoose.model('Department').schema
 const schema = Schema({
     registration: {
         type: Number,
@@ -15,6 +17,7 @@ const schema = Schema({
         require
     },
     role: RoleSchema,
-    status: StatusSchema
+    status: StatusSchema,
+    department: DepartmentSchema
 });
 module.exports = schema;

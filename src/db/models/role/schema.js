@@ -7,7 +7,6 @@ const schema = Schema({
     name: {
         type: String,
         require
-    },
-    department: SchemaDepartment
+    }
 });
 module.exports = schema;
