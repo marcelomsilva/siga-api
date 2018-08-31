@@ -37,6 +37,18 @@ function getById(req,res) {
     });
 }
 
+function getByRegistration(req,res) {
+    let Employee = db.Employee;
+    Employee.find({registration:req.params.id})
+        .then(employee => {
+            if(!employee) return res.status(404).send(null);
+            else return res.status(200).json(employee);
+        })
+        .catch(error => {
+            console.log(error);
+        });
+}
+
 function updateById(req,res) {
     let Employee = db.Employee;
     Employee.findByIdAndUpdate(req.params.id,req.body)
@@ -50,6 +62,7 @@ function updateById(req,res) {
 router.post('/register', register)
 router.get('', getAll)
 router.get('/:id', getById)
+router.get('/registration/:id', getByRegistration)
 router.post('/:id', updateById)
 
 module.exports = router
