@@ -28,6 +28,15 @@ function register(req,res) {
     });
 }
 
+function getByRegistration(req,res) {
+    let User = db.User;
+    User.find({registration:req.params.id})
+        .then(user => {
+            if(!user) res.sendStatus(404);
+            else return res.status(200).json(user);
+        });
+}
+
 function getUser(req,res) {
     var token = req.headers['x-access-token'];
     let User = db.User;
@@ -62,5 +71,6 @@ function getAll(req,res) {
 router.post('/register', register)
 router.get('/me', getUser)
 router.get('', getAll)
+router.get('/registration/:id', getByRegistration)
 
 module.exports = router

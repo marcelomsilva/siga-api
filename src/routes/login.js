@@ -6,6 +6,7 @@ const jwt = require('jsonwebtoken')
 const bcryptjs = require('bcryptjs')
 const config = require('./config')
 
+// Login by Username and Password
 function login(req,res) {
     let User = db.User;
     User.findOne({username:req.body.username},(error,user)=>{

@@ -37,6 +37,8 @@ function getById(req,res) {
     });
 }
 
+
+// Get Employee By Registration property
 function getByRegistration(req,res) {
     let Employee = db.Employee;
     Employee.find({registration:req.params.id})
@@ -49,6 +51,7 @@ function getByRegistration(req,res) {
         });
 }
 
+//Update Employee by Id
 function updateById(req,res) {
     let Employee = db.Employee;
     Employee.findByIdAndUpdate(req.params.id,req.body)
