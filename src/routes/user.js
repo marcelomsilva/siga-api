@@ -34,6 +34,33 @@ function getByRegistration(req,res) {
         .then(user => {
             if(!user) res.sendStatus(404);
             else return res.status(200).json(user);
+        })
+        .catch(error => {
+            res.status(400).json(error);
+        });
+}
+
+function getByUsername(req,res) {
+    let User = db.User;
+    User.find({username:req.params.username})
+        .then(user => {
+            if(!user) res.sendStatus(404);
+            else return res.status(200).json(user);
+        })
+        .catch(error => {
+            res.status(400).json(error);
+        });
+}
+
+function getById(req,res) {
+    let User = db.User;
+    User.findById(req.params.id)
+        .then(user => {
+            if(!user) res.sendStatus(404);
+            else return res.status(200).json(user);
+        })
+        .catch(error => {
+            res.status(400).json(error);
         });
 }
 
@@ -72,5 +99,7 @@ router.post('/register', register)
 router.get('/me', getUser)
 router.get('', getAll)
 router.get('/registration/:id', getByRegistration)
+router.get('/:id', getById)
+router.get('/username/:username',getByUsername)
 
 module.exports = router

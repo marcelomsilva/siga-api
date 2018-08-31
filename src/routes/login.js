@@ -23,7 +23,7 @@ function login(req,res) {
                     let token = jwt.sign({id:user._id},config.secrect,{
                     expiresIn: 86400 
                     });
-                    res.status(200).send({auth:true,token:token});
+                    res.status(200).send({auth:true,token:token,user:user});
                 }
             }
         }
