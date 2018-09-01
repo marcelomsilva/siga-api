@@ -8,6 +8,10 @@ const schema = Schema({
     },
     branchLine: {
         type: Number,
+    },
+    isActive: {
+        type: Boolean,
+        require
     }
 });
 module.exports = schema

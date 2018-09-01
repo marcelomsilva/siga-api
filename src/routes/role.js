@@ -38,8 +38,21 @@ function getById(req,res) {
         });
 }
 
-router.post('/register', register)
+function update(req,res) {
+    let Role = db.Role;
+    Role.findByIdAndUpdate(req.params.id,req.body)
+        .then(role => {
+            if(!role) res.sendStatus(404);
+            else return res.status(200).json(role);
+        })
+        .catch(error => {
+            res.status(400).send(error);
+        });
+}
+
 router.get('', getAll)
 router.get('/:id', getById)
+router.post('/update/:id', update)
+router.post('/register', register)
 
 module.exports = router

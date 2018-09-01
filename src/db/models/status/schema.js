@@ -5,6 +5,10 @@ const schema = Schema({
     name: {
         type: String,
         require
+    },
+    isActive: {
+        type: Boolean,
+        require
     }
 });
 module.exports = schema;

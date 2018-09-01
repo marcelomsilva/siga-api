@@ -61,11 +61,11 @@ function updateById(req,res) {
     });
 }
 
-
-router.post('/register', register)
 router.get('', getAll)
 router.get('/:id', getById)
+router.post('/update/:id', updateById)
+router.post('/register', register)
 router.get('/registration/:id', getByRegistration)
-router.post('/:id', updateById)
+
 
 module.exports = router

@@ -8,6 +8,10 @@ const schema = Schema({
     },
     description: {
         type: String,
+    },
+    isActive: {
+        type: Boolean,
+        require
     }
 });
 module.exports = schema;
