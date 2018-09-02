@@ -17,6 +17,7 @@ function register(req,res) {
         });
 }
 
+// Get All Departments
 function getAll(req,res) {
     let Department = db.Department;
     Department.find()
@@ -29,7 +30,34 @@ function getAll(req,res) {
     });
 }
 
-router.post('/register', register)
+function getById(req,res) {
+    let Department = db.Department;
+    Department.findById(req.params.id)
+        .then(department => {
+            if(!department) res.sendStatus(404);
+            else return res.status(200).json(department);
+        })
+        .catch(error => {
+            return res.status(400).json(error);
+        });
+}
+
+function updateById(req,res) {
+    let Department = db.Department;
+    Department.findByIdAndUpdate(req.params.id,req.body)
+        .then(department => {
+            if(!department) res.sendStatus(404);
+            else return res.status(200).json(department);
+        })
+        .catch(error => {
+            return res.status(400).json(error);
+        });
+}
+
 router.get('', getAll)
+router.get('/:id', getById)
+router.post('/register', register)
+router.post('/update/:id', updateById)
+
 
 module.exports = router

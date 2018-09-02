@@ -27,7 +27,34 @@ function getAll(req,res) {
         });
 }
 
-router.post('/register', register)
+function getById(req,res) {
+    let Status = db.Status;
+    Status.findById(req.params.id)
+        .then(status => {
+            if(!status) res.sendStatus(404);
+            else return res.status(200).json(status);
+        })
+        .catch(error => {
+            return res.status(400).json(error);
+        });
+}
+
+function updateById(req,res) {
+    let Status = db.Status;
+    Status.findByIdAndUpdate(req.params.id,req.body)
+    .then(status => {
+        if(!status) res.sendStatus(404);
+        else return res.status(200).json(status);
+    })
+    .catch(error => {
+        return res.status(400).json(error);
+    });
+}
+
 router.get('', getAll)
+router.get('/:id', getById)
+router.post('/register', register)
+router.get('/update/:id', updateById)
+
 
 module.exports = router;

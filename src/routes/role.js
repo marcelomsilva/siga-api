@@ -38,7 +38,7 @@ function getById(req,res) {
         });
 }
 
-function update(req,res) {
+function updateById(req,res) {
     let Role = db.Role;
     Role.findByIdAndUpdate(req.params.id,req.body)
         .then(role => {
@@ -46,13 +46,13 @@ function update(req,res) {
             else return res.status(200).json(role);
         })
         .catch(error => {
-            res.status(400).send(error);
+            return res.status(400).json(error);
         });
 }
 
 router.get('', getAll)
 router.get('/:id', getById)
-router.post('/update/:id', update)
 router.post('/register', register)
+router.post('/update/:id', updateById)
 
 module.exports = router
