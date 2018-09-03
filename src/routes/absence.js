@@ -40,10 +40,35 @@ function getById(req,res){
         });
 }
 
+function updateById(req,res){
+    let Absence = db.Absence;
+    Absence.findByIdAndUpdate(req.params.id,req.body)
+        .then(absence => {
+            if(!absence) res.sendStatus(404);
+            else return res.status(200).json(absence);
+        })
+        .catch(error => {
+            res.status(400).json(error);
+        });
+}
+
+function cancelById(req,res){
+    let Absence = db.Absence;
+    Absence.findByIdAndUpdate(req.params.id,req.body)
+        .then(absence => {
+            if(!absence) res.sendStatus(404);
+            else return res.status(200).json(absence);
+        })
+        .catch(error => {
+            return res.status(400).json(error);
+        });
+}
+
 router.get('', getAll)
 router.get('/:id', getById)
 router.post('/register', register)
-
+router.post('/update/:id', updateById)
+router.post('/cancel/:id', cancelById)
 
 
 module.exports = router

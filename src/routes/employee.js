@@ -34,6 +34,9 @@ function getById(req,res) {
     .then(employee => {
         if(!employee) res.sendStatus(404);
         else return res.status(200).json(employee);
+    })
+    .catch(error => {
+        return res.status(400).json(error);
     });
 }
 
@@ -63,8 +66,8 @@ function updateById(req,res) {
 
 router.get('', getAll)
 router.get('/:id', getById)
-router.post('/update/:id', updateById)
 router.post('/register', register)
+router.post('/update/:id', updateById)
 router.get('/registration/:id', getByRegistration)
 
 

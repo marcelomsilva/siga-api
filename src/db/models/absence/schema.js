@@ -10,6 +10,7 @@ const SchemaUser = mongoose.model('User').schema
 const schema = Schema({
     employee: SchemaEmployee,
     events: [SchemaEvent],
-    user: SchemaUser
+    user: SchemaUser,
+    isCanceled: Boolean
 });
 module.exports = schema;
