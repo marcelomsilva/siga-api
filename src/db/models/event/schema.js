@@ -8,6 +8,7 @@ const schema = Schema({
         type: Date,
         require
     },
-    document: SchemaDocument
+    document: SchemaDocument,
+    note: String
 });
 module.exports = schema;

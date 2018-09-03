@@ -86,6 +86,18 @@ function getUser(req,res) {
     }
 }
 
+function updateById(req,res){
+    let User = db.User;
+    User.findByIdAndUpdate(req.params.id,req.body)
+        .then(user => {
+            if(!user) res.sendStatus(404);
+            else return res.status(200).json(user);
+        })
+        .catch(error => {
+            return res.status(400).json(error);
+        });
+}
+
 function getAll(req,res) {
     let User = db.User;
     User.find()
@@ -95,11 +107,12 @@ function getAll(req,res) {
         });
 }
 
-router.post('/register', register)
-router.get('/me', getUser)
 router.get('', getAll)
-router.get('/registration/:id', getByRegistration)
+router.get('/me', getUser)
 router.get('/:id', getById)
+router.post('/register', register)
+router.post('/update/:id', updateById)
 router.get('/username/:username',getByUsername)
+router.get('/registration/:id', getByRegistration)
 
 module.exports = router

@@ -28,7 +28,22 @@ function getAll(req,res) {
     });
 }
 
-router.post('/register', register)
+function getById(req,res){
+    let Absence = db.Absence;
+    Absence.findById(req.params.id)
+        .then(absence => {
+            if(!absence) res.sendStatus(404);
+            else return res.status(200).json(absence);
+        })
+        .catch(error => {
+            return res.status(400).json(error);
+        });
+}
+
 router.get('', getAll)
+router.get('/:id', getById)
+router.post('/register', register)
+
+
 
 module.exports = router

@@ -54,7 +54,7 @@ function updateById(req,res) {
 router.get('', getAll)
 router.get('/:id', getById)
 router.post('/register', register)
-router.get('/update/:id', updateById)
+router.post('/update/:id', updateById)
 
 
 module.exports = router;
