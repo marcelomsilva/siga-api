@@ -98,9 +98,9 @@ function updateById(req,res){
         });
 }
 
-function updatePasswordById(res,res){
+function updatePasswordById(req,res){
     let User = db.User;
-    User.findByIdAndUpdate(req.params.id,{password:req.body.password})
+    User.findByIdAndUpdate(req.params.id,{password:bcrypt.hashSync(req.body.password,10)})
         .then(user => {
             if(!user) res.sendStatus(404);
             else return res.status(200).json(user);
@@ -108,6 +108,30 @@ function updatePasswordById(res,res){
         .catch(error => {
             return res.status(400).json(error);
         });
+}
+
+function changePassword(req,res){
+    let User = db.User;
+    User.findOne({registration:req.body.registration})
+        .then(user =>{
+            if(!user){
+                res.sendStatus(404);
+            }else{
+                let isPasswordValid = bcrypt.compareSync(req.body.currentPassword,user.password);
+                if(!isPasswordValid){
+                    console.log(req.body.password);
+                    return res.json(false);
+                }else{
+                    console.log(req.body.password);
+                    console.log(user.password);
+                    return true;
+                }
+            }
+        })
+        .catch(error =>{
+            return res.status(400).json(error);
+        });
+        
 }
 
 function getAll(req,res) {
@@ -127,5 +151,6 @@ router.post('/update/:id', updateById)
 router.get('/username/:username',getByUsername)
 router.get('/registration/:id', getByRegistration)
 router.post('/update/password/:id', updatePasswordById)
+router.post('/change/password', changePassword)
 
 module.exports = router
