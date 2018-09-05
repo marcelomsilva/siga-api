@@ -65,7 +65,7 @@ function getById(req,res) {
 }
 
 function getUser(req,res) {
-    var token = req.headers['x-access-token'];
+    var token = req.params.token; //req.headers['x-access-token'];
     let User = db.User;
     if(!token) {
         return res.status(401).send({auth:false,message:'No token provided'});
@@ -98,6 +98,18 @@ function updateById(req,res){
         });
 }
 
+function updatePasswordById(res,res){
+    let User = db.User;
+    User.findByIdAndUpdate(req.params.id,{password:req.body.password})
+        .then(user => {
+            if(!user) res.sendStatus(404);
+            else return res.status(200).json(user);
+        })
+        .catch(error => {
+            return res.status(400).json(error);
+        });
+}
+
 function getAll(req,res) {
     let User = db.User;
     User.find()
@@ -108,11 +120,12 @@ function getAll(req,res) {
 }
 
 router.get('', getAll)
-router.get('/me', getUser)
+router.get('/me/:token', getUser)
 router.get('/:id', getById)
 router.post('/register', register)
 router.post('/update/:id', updateById)
 router.get('/username/:username',getByUsername)
 router.get('/registration/:id', getByRegistration)
+router.post('/update/password/:id', updatePasswordById)
 
 module.exports = router
