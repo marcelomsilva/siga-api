@@ -31,6 +31,11 @@ function login(req,res) {
     });
 }
 
+function logout(req,res){
+    return res.status(200).json({auth:false,token:null});
+}
+
 router.post('', login)
+router.get('/logout', logout)
 
 module.exports = router
