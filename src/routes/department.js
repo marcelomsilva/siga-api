@@ -42,6 +42,18 @@ function getById(req,res) {
         });
 }
 
+function getByName(req,res){
+    let Department = db.Department;
+    Department.find({name:req.params.name})
+        .then(department => {
+            if(!department) res.status(404).json({status:false});
+            else return res.status(200).json({status:true});
+        })
+        .catch(error => {
+            return res.status(400).json(error);
+        });
+}
+
 function updateById(req,res) {
     let Department = db.Department;
     Department.findByIdAndUpdate(req.params.id,req.body)
@@ -56,8 +68,10 @@ function updateById(req,res) {
 
 router.get('', getAll)
 router.get('/:id', getById)
+router.get('/get/:name', getByName)
 router.post('/register', register)
 router.post('/update/:id', updateById)
+
 
 
 module.exports = router

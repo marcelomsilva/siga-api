@@ -64,11 +64,48 @@ function cancelById(req,res){
         });
 }
 
+function getByEmployeeId(req,res){
+    let Absence = db.Absence;
+    Absence.find({"employee._id":req.params.id})
+        .then(absences => {
+            if(!absences) res.sendStatus(404);
+            else return res.status(200).json(absences);
+        })
+        .catch(error => {
+            return res.status(400).json(error);
+        })
+}
+
+function getDocumentsByEmployeeId(req,res){
+    let Absence = db.Absence;
+    let documents = [];
+    Absence.find({"employee._id":req.params.id,isCanceled:false})
+        .then(absences => {
+            if(!absences){
+                res.sendStatus(404);
+            }else{
+                absences.forEach(res => {
+                    res.events.forEach(res =>{
+                            documents.push(res.document);
+                    });
+                });
+                return res.status(200).json(documents);
+            }
+        })
+        .catch(error => {
+            return res.status(400).json(error);
+        });
+}
+
+
+
 router.get('', getAll)
 router.get('/:id', getById)
 router.post('/register', register)
 router.post('/update/:id', updateById)
 router.post('/cancel/:id', cancelById)
+router.get('/employee/:id', getByEmployeeId)
+router.get('/documents/:id', getDocumentsByEmployeeId)
 
 
 module.exports = router
