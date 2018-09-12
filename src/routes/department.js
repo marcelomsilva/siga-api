@@ -46,8 +46,8 @@ function getByName(req,res){
     let Department = db.Department;
     Department.find({name:req.params.name})
         .then(department => {
-            if(!department) res.status(404).json({status:false});
-            else return res.status(200).json({status:true});
+            if(!department) res.status(404).json(false);
+            else return res.status(200).json(department);
         })
         .catch(error => {
             return res.status(400).json(error);

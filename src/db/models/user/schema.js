@@ -22,10 +22,6 @@ const schema = Schema({
         type: Boolean,
         require
     },
-    isLeader: {
-        type: Boolean,
-        require
-    },
     isAdmin: {
         type: Boolean,
         require

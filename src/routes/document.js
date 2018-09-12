@@ -40,6 +40,18 @@ function getById(req,res) {
     })
 }
 
+function getByName(req,res){
+    let Document = db.Document;
+    Document.find({name:req.params.name})
+        .then(document => {
+            if(!document) res.status(404).json(false);
+            else return res.status(200).json(document);
+        })
+        .catch(error => {
+            return res.status(400).json(error);
+        });
+}
+
 function getAllById(req,res){
     let Document = db.Document;
     Document.find({_id:req.params.id})
@@ -69,6 +81,7 @@ function updateById(req,res) {
 router.get('', getAll)
 router.get('/:id', getById)
 router.get('/all/:id', getAllById)
+router.get('/get/:name', getByName)
 router.post('/register', register)
 router.post('/update/:id', updateById)
 

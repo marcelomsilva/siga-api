@@ -39,6 +39,18 @@ function getById(req,res) {
         });
 }
 
+function getByName(req,res){
+    let Status = db.Status;
+    Status.find({name:req.params.name})
+        .then(status => {
+            if(!status) res.status(404).json(false);
+            else return res.status(200).json(status);
+        })
+        .catch(error => {
+            return res.status(400).json(error);
+        });
+}
+
 function updateById(req,res) {
     let Status = db.Status;
     Status.findByIdAndUpdate(req.params.id,req.body)
@@ -54,6 +66,7 @@ function updateById(req,res) {
 router.get('', getAll)
 router.get('/:id', getById)
 router.post('/register', register)
+router.get('/get/:name', getByName)
 router.post('/update/:id', updateById)
 
 

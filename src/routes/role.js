@@ -38,6 +38,18 @@ function getById(req,res) {
         });
 }
 
+function getByName(req,res){
+    let Role = db.Role;
+    Role.find({name:req.params.name})
+        .then(role => {
+            if(!role) res.status(404).json(false);
+            else return res.status(200).json(role);
+        })
+        .catch(error => {
+            return res.status(400).json(error);
+        });
+}
+
 function updateById(req,res) {
     let Role = db.Role;
     Role.findByIdAndUpdate(req.params.id,req.body)
@@ -52,6 +64,7 @@ function updateById(req,res) {
 
 router.get('', getAll)
 router.get('/:id', getById)
+router.get('/get/:name', getByName)
 router.post('/register', register)
 router.post('/update/:id', updateById)
 
