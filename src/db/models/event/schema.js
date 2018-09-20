@@ -6,6 +6,7 @@ const SchemaDocument = mongoose.model('Document').schema
 const schema = Schema({
     date: Date,
     document: SchemaDocument,
-    note: String
+    note: String,
+    isUnjustified: Boolean
 });
 module.exports = schema;
