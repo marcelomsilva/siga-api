@@ -97,6 +97,28 @@ function getDocumentsByEmployeeId(req,res){
         });
 }
 
+function getDocumentsByAbsenceId(req,res){
+    let Absence = db.Absence;
+    let documents = [];
+    Absence.find({_id:req.params.id})
+        .then(absences => {
+            if(!absences){
+                res.sendStatus(404);
+            }else{
+                absences.forEach(res => {
+                    res.events.forEach(res => {
+                        documents.push(res.document);
+                    });
+                });
+                return res.status(200).json(documents);
+            }
+        })
+        .catch(error => {
+            return res.status(400).json(error);
+        });
+}
+
+
 function getUnjustifiedByEmployeeId(req,res){
     let amountUnjustified = 0;
     let Absence = db.Absence;
@@ -127,7 +149,8 @@ router.post('/register', register)
 router.post('/update/:id', updateById)
 router.post('/cancel/:id', cancelById)
 router.get('/employee/:id', getByEmployeeId)
-router.get('/documents/:id', getDocumentsByEmployeeId)
+router.get('/documents/:id', getDocumentsByAbsenceId)
+router.get('/documents/employee/:id', getDocumentsByEmployeeId)
 router.get('/unjustified/:id', getUnjustifiedByEmployeeId)
 
 
