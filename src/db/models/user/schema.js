@@ -1,5 +1,7 @@
 'use strict';
 const mongoose = require('mongoose')
+const Department = require('../department/index')
+const DepartmentSchema = mongoose.model('Department').schema
 const Schema = mongoose.Schema
 const schema = Schema({
     registration: {
@@ -18,6 +20,7 @@ const schema = Schema({
         type: String,
         require
     },
+    department: DepartmentSchema,
     isActive: {
         type: Boolean,
         require
