@@ -14,6 +14,7 @@ function register(req,res) {
         name: req.body.name,
         username: req.body.username,
         password: bcrypt.hashSync(req.body.password,10),
+        department: req.body.department,
         isActive: req.body.isActive,
         isLeader: req.body.isLeader,
         isAdmin: req.body.isAdmin
