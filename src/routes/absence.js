@@ -129,11 +129,13 @@ function getUnjustifiedByEmployeeId(req,res){
                 console.log('dda');
             }else{
                 absences.forEach(res => {
-                    res.events.forEach(event => {
-                        if(event.isUnjustified == true){
-                            amountUnjustified++;
-                        }
-                    });
+                    if(res.isCanceled != true){
+                        res.events.forEach(event => {
+                            if(event.isUnjustified == true){
+                                amountUnjustified++;
+                            }
+                        });
+                    }
                 });
                 return res.status(200).json(amountUnjustified);
             }
@@ -141,6 +143,11 @@ function getUnjustifiedByEmployeeId(req,res){
         .catch(error => {
             return res.status(400).json(error);
         })
+}
+
+function getByDocumentId(req,res){
+    let Absence = db.Absence;
+    req.body.absence.find({})
 }
 
 router.get('', getAll)
