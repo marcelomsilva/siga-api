@@ -9,7 +9,7 @@ const SchemaEvent = mongoose.model('Event').schema
 const SchemaUser = mongoose.model('User').schema
 const schema = Schema({
     employee: SchemaEmployee,
-    events: [SchemaEvent],
+    event: SchemaEvent,
     user: SchemaUser,
     isCanceled: Boolean
 });

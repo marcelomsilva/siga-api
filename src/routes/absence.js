@@ -85,9 +85,7 @@ function getDocumentsByEmployeeId(req,res){
                 res.sendStatus(404);
             }else{
                 absences.forEach(res => {
-                    res.events.forEach(res =>{
-                            documents.push(res.document);
-                    });
+                    documents.push(res.event.document);
                 });
                 return res.status(200).json(documents);
             }
@@ -106,9 +104,7 @@ function getDocumentsByAbsenceId(req,res){
                 res.sendStatus(404);
             }else{
                 absences.forEach(res => {
-                    res.events.forEach(res => {
-                        documents.push(res.document);
-                    });
+                    documents.push(res.event.document);
                 });
                 return res.status(200).json(documents);
             }
@@ -126,15 +122,12 @@ function getUnjustifiedByEmployeeId(req,res){
         .then(absences => {
             if(!absences){
                 res.sendStatus(404);
-                console.log('dda');
             }else{
                 absences.forEach(res => {
                     if(res.isCanceled != true){
-                        res.events.forEach(event => {
-                            if(event.isUnjustified == true){
+                        if(res.event.isUnjustified == true){
                                 amountUnjustified++;
                             }
-                        });
                     }
                 });
                 return res.status(200).json(amountUnjustified);
