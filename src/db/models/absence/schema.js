@@ -11,6 +11,7 @@ const schema = Schema({
     employee: SchemaEmployee,
     event: SchemaEvent,
     user: SchemaUser,
-    isCanceled: Boolean
+    isCanceled: Boolean,
+    createdAt: Date
 });
 module.exports = schema;
