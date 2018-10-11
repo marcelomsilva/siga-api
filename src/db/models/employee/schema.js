@@ -18,6 +18,7 @@ const schema = Schema({
     },
     role: RoleSchema,
     status: StatusSchema,
-    department: DepartmentSchema
+    department: DepartmentSchema,
+    createdAt: Date
 });
 module.exports = schema;
