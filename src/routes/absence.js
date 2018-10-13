@@ -18,10 +18,19 @@ function register(req,res) {
 
 function getAll(req,res) {
     let Absence = db.Absence;
+    let absencesList = [];
     Absence.find()
     .then(absences => {
-        if(!absences) res.sendStatus(404);
-        else return res.status(200).json(absences);
+        if(!absences){
+            res.sendStatus(404);
+        }else{
+            absences.forEach(absence => {
+                if(absence.isCanceled == false){
+                    absencesList.push(absence);
+                }
+            });
+            return res.status(200).json(absencesList);
+        } 
     })
     .catch(error => {
         res.status(400).json({error:error});
@@ -66,10 +75,19 @@ function cancelById(req,res){
 
 function getByEmployeeId(req,res){
     let Absence = db.Absence;
+    let absencesList = [];
     Absence.find({"employee._id":req.params.id})
         .then(absences => {
-            if(!absences) res.sendStatus(404);
-            else return res.status(200).json(absences);
+            if(!absences){
+                res.sendStatus(404);
+            }else{
+                absences.forEach(absence => {
+                    if(absence.isCanceled == false){
+                        absencesList.push(absence);
+                    }
+                });
+            } 
+            return res.status(200).json(absencesList);
         })
         .catch(error => {
             return res.status(400).json(error);
