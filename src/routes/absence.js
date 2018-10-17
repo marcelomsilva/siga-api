@@ -19,6 +19,7 @@ function register(req,res) {
 function getAll(req,res) {
     let Absence = db.Absence;
     let absencesList = [];
+    let datesList = [];
     Absence.find()
     .then(absences => {
         if(!absences){
