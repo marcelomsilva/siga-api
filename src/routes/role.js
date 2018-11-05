@@ -28,6 +28,17 @@ function getAll(req,res) {
     );
 }
 
+// Get all Roles
+function getAllActive(req,res) {
+    let Role = db.Role;
+    Role.find({isActive:true})
+        .then(roles => {
+            if(!roles) res.sendStatus(404);
+            else return res.status(200).json(roles);
+        }
+    );
+}
+
 // Get a Role by Id
 function getById(req,res) {
     let Role = db.Role;
@@ -63,6 +74,7 @@ function updateById(req,res) {
 }
 
 router.get('', getAll)
+router.get('/get/active', getAllActive)
 router.get('/:id', getById)
 router.get('/get/:name', getByName)
 router.post('/register', register)

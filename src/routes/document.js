@@ -27,21 +27,13 @@ function getAll(req,res) {
     });
 }
 
+// Get All Documents - isActive: true
 function getAllActive(req,res){
     let Document = db.Document;
-    let documentsList = [];
-    Document.find()
+    Document.find({isActive:true})
     .then(documents => {
-        if(!documents){
-            res.sendStatus(404);
-        }else{
-            documents.forEach(document => {
-                if(document.isActive == true){
-                    documentsList.push(document);
-                }
-            });
-            return res.status(200).json(documentsList);
-        } 
+        if(!documents) res.sendStatus(404);
+        else return res.status(200).json(documents);
     });
 }
 
@@ -98,7 +90,7 @@ function updateById(req,res) {
 
 router.get('', getAll)
 router.get('/:id', getById)
-router.get('/all/active', getAllActive)
+router.get('/get/active', getAllActive)
 router.get('/all/:id', getAllById)
 router.get('/get/:name', getByName)
 router.post('/register', register)

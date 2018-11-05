@@ -18,20 +18,22 @@ function register(req,res) {
 
 function getAll(req,res) {
     let Absence = db.Absence;
-    let absencesList = [];
-    let datesList = [];
     Absence.find()
     .then(absences => {
-        if(!absences){
-            res.sendStatus(404);
-        }else{
-            absences.forEach(absence => {
-                if(absence.isCanceled == false){
-                    absencesList.push(absence);
-                }
-            });
-            return res.status(200).json(absencesList);
-        } 
+        if(!absences) res.sendStatus(404);
+        else return res.status(200).json(absences);
+    })
+    .catch(error => {
+        res.status(400).json({error:error});
+    });
+}
+
+function getAllActive(req,res) {
+    let Absence = db.Absence;
+    Absence.find({isCanceled: false})
+    .then(absences => {
+        if(!absences) res.sendStatus(404);
+        else return res.status(200).json(absences);
     })
     .catch(error => {
         res.status(400).json({error:error});
@@ -157,20 +159,16 @@ function getUnjustifiedByEmployeeId(req,res){
         })
 }
 
-function getByDocumentId(req,res){
-    let Absence = db.Absence;
-    req.body.absence.find({})
-}
-
 router.get('', getAll)
 router.get('/:id', getById)
 router.post('/register', register)
 router.post('/update/:id', updateById)
 router.post('/cancel/:id', cancelById)
+router.get('/get/active', getAllActive)
 router.get('/employee/:id', getByEmployeeId)
 router.get('/documents/:id', getDocumentsByAbsenceId)
-router.get('/documents/employee/:id', getDocumentsByEmployeeId)
 router.get('/unjustified/:id', getUnjustifiedByEmployeeId)
+router.get('/documents/employee/:id', getDocumentsByEmployeeId)
 
 
 module.exports = router
