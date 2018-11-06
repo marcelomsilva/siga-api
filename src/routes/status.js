@@ -27,6 +27,16 @@ function getAll(req,res) {
         });
 }
 
+// Get all Status - Active
+function getAllActive(req,res) {
+    let Status = db.Status;
+    Status.find({isActive:true})
+        .then(status => {
+            if(!status) res.sendStatus(404);
+            else return res.status(200).json(status);
+        });
+}
+
 function getById(req,res) {
     let Status = db.Status;
     Status.findById(req.params.id)
@@ -64,6 +74,7 @@ function updateById(req,res) {
 }
 
 router.get('', getAll)
+router.get('/get/active', getAllActive)
 router.get('/:id', getById)
 router.post('/register', register)
 router.get('/get/:name', getByName)

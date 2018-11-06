@@ -30,6 +30,19 @@ function getAll(req,res) {
     });
 }
 
+// Get All Departments - Active
+function getAllActive(req,res) {
+    let Department = db.Department;
+    Department.find({isActive:true})
+    .then(departments => {
+        if(!departments) res.sendStatus(400);
+        else return res.status(200).json(departments);
+    })
+    .catch(error => {
+        res.status(400).json({error:error});
+    });
+}
+
 function getById(req,res) {
     let Department = db.Department;
     Department.findById(req.params.id)
@@ -67,6 +80,7 @@ function updateById(req,res) {
 }
 
 router.get('', getAll)
+router.get('/get/active', getAllActive)
 router.get('/:id', getById)
 router.get('/get/:name', getByName)
 router.post('/register', register)

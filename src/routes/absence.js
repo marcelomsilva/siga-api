@@ -18,10 +18,18 @@ function register(req,res) {
 
 function getAll(req,res) {
     let Absence = db.Absence;
+    let list = [];
     Absence.find()
     .then(absences => {
-        if(!absences) res.sendStatus(404);
-        else return res.status(200).json(absences);
+        if(!absences){
+            res.sendStatus(404);
+        }else{
+            list = absences.sort((obj1,obj2) => {
+                if (obj1.event.date < obj2.event.date) return 1;
+                if (obj1.event.date > obj2.event.date) return -1;
+              });
+            return res.status(200).json(list);
+        }
     })
     .catch(error => {
         res.status(400).json({error:error});
@@ -30,10 +38,38 @@ function getAll(req,res) {
 
 function getAllActive(req,res) {
     let Absence = db.Absence;
+    let list = [];
     Absence.find({isCanceled: false})
     .then(absences => {
-        if(!absences) res.sendStatus(404);
-        else return res.status(200).json(absences);
+        if(!absences){
+            res.sendStatus(404);
+        }else{
+            list = absences.sort((obj1,obj2) => {
+                if (obj1.event.date < obj2.event.date) return 1;
+                if (obj1.event.date > obj2.event.date) return -1;
+              });
+            return res.status(200).json(list);
+        }
+    })
+    .catch(error => {
+        res.status(400).json({error:error});
+    });
+}
+
+function getAllCanceled(req,res) {
+    let Absence = db.Absence;
+    let list = [];
+    Absence.find({isCanceled: true})
+    .then(absences => {
+        if(!absences){
+            res.sendStatus(404);
+        }else{
+            list = absences.sort((obj1,obj2) => {
+                if (obj1.event.date < obj2.event.date) return 1;
+                if (obj1.event.date > obj2.event.date) return -1;
+              });
+            return res.status(200).json(list);
+        } 
     })
     .catch(error => {
         res.status(400).json({error:error});
@@ -78,19 +114,18 @@ function cancelById(req,res){
 
 function getByEmployeeId(req,res){
     let Absence = db.Absence;
-    let absencesList = [];
-    Absence.find({"employee._id":req.params.id})
+    let list = [];
+    Absence.find({"employee._id":req.params.id, isCanceled:false})
         .then(absences => {
             if(!absences){
                 res.sendStatus(404);
             }else{
-                absences.forEach(absence => {
-                    if(absence.isCanceled == false){
-                        absencesList.push(absence);
-                    }
-                });
+                list = absences.sort((obj1,obj2) => {
+                    if (obj1.event.date < obj2.event.date) return 1;
+                    if (obj1.event.date > obj2.event.date) return -1;
+                  });
+                return res.status(200).json(list);
             } 
-            return res.status(200).json(absencesList);
         })
         .catch(error => {
             return res.status(400).json(error);
@@ -139,19 +174,12 @@ function getDocumentsByAbsenceId(req,res){
 function getUnjustifiedByEmployeeId(req,res){
     let amountUnjustified = 0;
     let Absence = db.Absence;
-    Absence.find({"employee._id":req.params.id})
+    Absence.find({"employee._id":req.params.id,isCanceled:false,isUnjustified:true})
         .then(absences => {
             if(!absences){
                 res.sendStatus(404);
             }else{
-                absences.forEach(res => {
-                    if(res.isCanceled != true){
-                        if(res.event.isUnjustified == true){
-                                amountUnjustified++;
-                            }
-                    }
-                });
-                return res.status(200).json(amountUnjustified);
+                return res.status(200).json(absences.length);
             }
         })
         .catch(error => {
@@ -165,6 +193,7 @@ router.post('/register', register)
 router.post('/update/:id', updateById)
 router.post('/cancel/:id', cancelById)
 router.get('/get/active', getAllActive)
+router.get('/get/canceled', getAllCanceled)
 router.get('/employee/:id', getByEmployeeId)
 router.get('/documents/:id', getDocumentsByAbsenceId)
 router.get('/unjustified/:id', getUnjustifiedByEmployeeId)
