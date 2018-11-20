@@ -28,7 +28,21 @@ function getById(req,res){
         });
 }
 
-router.get('/:id', register)
+
+function getByDepartmentId(req,res){
+    let Absence = db.Absence;
+    Absence.find({"employee._id":req.params.id})
+        .then(absence => {
+            if(!absence) res.sendStatus(404);
+            else return res.status(200).json(absence);
+        })
+        .catch(error => {
+            return res.status(400).json(error);
+        });
+}
+
+router.get('/:id', getById)
 router.post('/register', register)
+router.get('/get/department/:id', getByDepartmentId)
 
 module.exports = router
