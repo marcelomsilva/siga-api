@@ -12,7 +12,6 @@ const Absence = require('./models/absence')
 const User = require('./models/user')
 const Department = require('./models/department')
 const Log = require('./models/log')
-const DepartmentRole = require('./models/departmentRole')
 
 module.exports = {
     Employee: Employee,
@@ -23,7 +22,6 @@ module.exports = {
     User: User,
     Department: Department,
     Log: Log,
-    DepartmentRole: DepartmentRole
 }
 
 mongoose.connection.once('open',()=>{

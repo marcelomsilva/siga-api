@@ -38,6 +38,5 @@ app.use('/user', User)
 app.use('/login', Login)
 app.use('/log', Log)
 app.use('/logs', Log)
-app.use('/departmentRole', DepartmentRole)
 
 app.listen(3000)
