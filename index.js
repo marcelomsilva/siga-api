@@ -20,7 +20,6 @@ const Department = require('./src/routes/department')
 const User = require('./src/routes/user')
 const Login = require('./src/routes/login')
 const Log = require('./src/routes/log')
-const DepartmentRole = require('./src/routes/departmentRole')
 
 app.use('/employee', Employee)
 app.use('/employees', Employee)

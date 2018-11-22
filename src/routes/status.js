@@ -20,20 +20,34 @@ function register(req,res) {
 // Get all Status
 function getAll(req,res) {
     let Status = db.Status;
+    let list = [];
     Status.find()
         .then(status => {
-            if(!status) res.sendStatus(404);
-            else return res.status(200).json(status);
+            if(!status){
+                res.sendStatus(404);
+            }else{
+                list = status.sort(function(a,b) {
+                    return a.name < b.name ? -1 : a.name > b.name ? 1 : 0;
+                });
+                return res.status(200).json(list);
+            } 
         });
 }
 
 // Get all Status - Active
 function getAllActive(req,res) {
     let Status = db.Status;
+    let list = [];
     Status.find({isActive:true})
         .then(status => {
-            if(!status) res.sendStatus(404);
-            else return res.status(200).json(status);
+            if(!status){
+                res.sendStatus(404);
+            }else{
+                list = status.sort(function(a,b) {
+                    return a.name < b.name ? -1 : a.name > b.name ? 1 : 0;
+                });
+                return res.status(200).json(list);
+            } 
         });
 }
 

@@ -20,20 +20,34 @@ function register(req,res) {
 //Get All Documents
 function getAll(req,res) {
     let Document = db.Document;
+    let list = [];
     Document.find()
     .then(documents => {
-        if(!documents) res.sendStatus(404);
-        else return res.status(200).json(documents);
+        if(!documents){
+            res.sendStatus(404);
+        }else{
+            list = documents.sort(function(a,b) {
+                return a.name < b.name ? -1 : a.name > b.name ? 1 : 0;
+            });
+            return res.status(200).json(list);
+        }
     });
 }
 
 // Get All Documents - isActive: true
 function getAllActive(req,res){
     let Document = db.Document;
+    let list = [];
     Document.find({isActive:true})
     .then(documents => {
-        if(!documents) res.sendStatus(404);
-        else return res.status(200).json(documents);
+        if(!documents){
+            res.sendStatus(404);
+        }else{
+            list = documents.sort(function(a,b) {
+                return a.name < b.name ? -1 : a.name > b.name ? 1 : 0;
+            });
+            return res.status(200).json(list);
+        }
     });
 }
 
@@ -64,10 +78,17 @@ function getByName(req,res){
 
 function getAllById(req,res){
     let Document = db.Document;
+    let list = [];
     Document.find({_id:req.params.id})
         .then(documents => {
-            if(!documents) res.sendStatus(404);
-            else return res.status(200).json(documents);
+            if(!documents){
+                res.sendStatus(404);
+            }else{
+                list = documents.sort(function(a,b) {
+                    return a.name < b.name ? -1 : a.name > b.name ? 1 : 0;
+                });
+                return res.status(200).json(list);
+            }
         })
         .catch(error => {
             return res.status(400).json(error);

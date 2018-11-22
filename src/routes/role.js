@@ -20,10 +20,17 @@ function register(req,res) {
 // Get all Roles
 function getAll(req,res) {
     let Role = db.Role;
+    let list = [];
     Role.find()
         .then(roles => {
-            if(!roles) res.sendStatus(404);
-            else return res.status(200).json(roles);
+            if(!roles){
+                res.sendStatus(404);
+            }else{
+                list = roles.sort(function(a,b) {
+                    return a.name < b.name ? -1 : a.name > b.name ? 1 : 0;
+                });
+                return res.status(200).json(list);
+            } 
         }
     );
 }
@@ -31,10 +38,17 @@ function getAll(req,res) {
 // Get all Roles
 function getAllActive(req,res) {
     let Role = db.Role;
+    let list = [];
     Role.find({isActive:true})
         .then(roles => {
-            if(!roles) res.sendStatus(404);
-            else return res.status(200).json(roles);
+            if(!roles){
+                res.sendStatus(404);
+            }else{
+                list = roles.sort(function(a,b) {
+                    return a.name < b.name ? -1 : a.name > b.name ? 1 : 0;
+                });
+                return res.status(200).json(list);
+            }
         }
     );
 }

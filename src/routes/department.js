@@ -20,10 +20,17 @@ function register(req,res) {
 // Get All Departments
 function getAll(req,res) {
     let Department = db.Department;
+    let list = [];
     Department.find()
     .then(departments => {
-        if(!departments) res.sendStatus(400);
-        else return res.status(200).json(departments);
+        if(!departments){
+            res.sendStatus(404);
+        }else{
+            list = departments.sort(function(a,b) {
+                return a.name < b.name ? -1 : a.name > b.name ? 1 : 0;
+            });
+            return res.status(200).json(list);
+        } 
     })
     .catch(error => {
         res.status(400).json({error:error});
@@ -33,10 +40,17 @@ function getAll(req,res) {
 // Get All Departments - Active
 function getAllActive(req,res) {
     let Department = db.Department;
+    let list = [];
     Department.find({isActive:true})
     .then(departments => {
-        if(!departments) res.sendStatus(400);
-        else return res.status(200).json(departments);
+        if(!departments){
+            res.sendStatus(404);
+        }else{
+            list = departments.sort(function(a,b) {
+                return a.name < b.name ? -1 : a.name > b.name ? 1 : 0;
+            });
+            return res.status(200).json(list);
+        } 
     })
     .catch(error => {
         res.status(400).json({error:error});
