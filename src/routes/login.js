@@ -9,7 +9,6 @@ const config = require('./config')
 // Login by Username and Password
 function login(req,res) {
     let User = db.User;
-    console.log(req.body.username);
     User.findOne({username:req.body.username},(error,user)=>{
         if(error){
             res.status(500).send(error);
