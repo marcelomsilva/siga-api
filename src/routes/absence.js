@@ -56,6 +56,26 @@ function getAllActive(req,res) {
     });
 }
 
+function getAllByDepartmentId(req,res){
+    let Absence = db.Absence;
+    let list = [];
+    Absence.find({"employee.department._id":req.params.id, isCanceled:false})
+        .then(absences => {
+            if(!absences){
+                res.sendStatus(404);
+            }else{
+                list = absences.sort((obj1,obj2) => {
+                    if (obj1.event.date < obj2.event.date) return 1;
+                    if (obj1.event.date > obj2.event.date) return -1;
+                  });
+                return res.status(200).json(list);
+            } 
+        })
+        .catch(error => {
+            return res.status(400).json(error);
+        })
+}
+
 function getAllCanceled(req,res) {
     let Absence = db.Absence;
     let list = [];
@@ -197,6 +217,7 @@ router.get('/get/canceled', getAllCanceled)
 router.get('/employee/:id', getByEmployeeId)
 router.get('/documents/:id', getDocumentsByAbsenceId)
 router.get('/unjustified/:id', getUnjustifiedByEmployeeId)
+router.get('/get/department/:id', getAllByDepartmentId)
 router.get('/documents/employee/:id', getDocumentsByEmployeeId)
 
 
