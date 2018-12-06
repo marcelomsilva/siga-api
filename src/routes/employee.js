@@ -40,6 +40,17 @@ function getById(req,res) {
     });
 }
 
+function getByDepartmentId(req,res) {
+    let Employee = db.Employee;
+    Employee.find({"department._id":req.params.id})
+    .then(employees => {
+        if(!employees) res.sendStatus(400);
+        else return res.status(200).json(employees);
+    })
+    .catch(error => {
+        res.status(500).json(error);
+    });
+}
 
 // Get Employee By Registration property
 function getByRegistration(req,res) {
@@ -69,6 +80,7 @@ router.get('/:id', getById)
 router.post('/register', register)
 router.post('/update/:id', updateById)
 router.get('/registration/:id', getByRegistration)
+router.get('/get/department/:id', getByDepartmentId)
 
 
 module.exports = router
