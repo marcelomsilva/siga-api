@@ -20,10 +20,18 @@ function register(req,res) {
 //Get All Employees
 function getAll(req,res) {
     let Employee = db.Employee;
+    let list = [];
     Employee.find()
         .then(employees => {
-            if(!employees) res.sendStatus(404);
-            else return res.status(200).json(employees);
+            if(!employees){
+                res.sendStatus(404);
+            }else{
+                list = employees.sort((obj1, obj2) => {
+                    if(obj1.name > obj2.name) return 1;
+                    if(obj1.name < obj2.name) return -1;
+                });
+                return res.status(200).json(list);
+            } 
         });
 }
 
@@ -44,8 +52,15 @@ function getByDepartmentId(req,res) {
     let Employee = db.Employee;
     Employee.find({"department._id":req.params.id})
     .then(employees => {
-        if(!employees) res.sendStatus(400);
-        else return res.status(200).json(employees);
+        if(!employees){
+            res.sendStatus(404);
+        }else{
+            list = employees.sort((obj1, obj2) => {
+                if(obj1.name > obj2.name) return 1;
+                if(obj1.name < obj2.name) return -1;
+            });
+            return res.status(200).json(list);
+        }
     })
     .catch(error => {
         res.status(500).json(error);
