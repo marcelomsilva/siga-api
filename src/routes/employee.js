@@ -49,11 +49,12 @@ function getById(req,res) {
 }
 
 function getByDepartmentId(req,res) {
-    let Employee = db.Employee;
+    let Employee = db.Employee;    
+    let list = [];
     Employee.find({"department._id":req.params.id})
     .then(employees => {
         if(!employees){
-            res.sendStatus(404);
+            res.sendStatus(404);            
         }else{
             list = employees.sort((obj1, obj2) => {
                 if(obj1.name > obj2.name) return 1;
@@ -63,7 +64,7 @@ function getByDepartmentId(req,res) {
         }
     })
     .catch(error => {
-        res.status(500).json(error);
+        res.status(500).json(error);        
     });
 }
 
@@ -76,7 +77,7 @@ function getByRegistration(req,res) {
             else return res.status(200).json(employee);
         })
         .catch(error => {
-            console.log(error);
+            res.status(500).json(error);
         });
 }
 
