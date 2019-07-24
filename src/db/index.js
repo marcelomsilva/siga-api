@@ -1,19 +1,10 @@
 'use strict';
 const mongoose = require('mongoose')
 //const urlDb = 'mongodb://db:27017/siga'
-const urlDb = 'mongodb://mongodb:27017/siga'
-const options = {
-    autoIndex: false, // Don't build indexes
-    reconnectTries: 30, // Retry up to 30 times
-    reconnectInterval: 500, // Reconnect every 500ms
-    poolSize: 10, // Maintain up to 10 socket connections
-    // If not connected, return errors immediately rather than waiting for reconnect
-    bufferMaxEntries: 0
-  }
+const urlDb = 'mongodb://localhost:27017/siga'
 mongoose.connect(urlDb, {useNewUrlParser: true}).then(() => {
     console.log("Connected")
 }).catch(err => {
-    console.log("ERRRROOOO");
     console.log(err.message);
 });
 mongoose.Promise = Promise
@@ -42,7 +33,7 @@ mongoose.connection.on('error', console.error.bind(console, 'connection error:')
 mongoose.connection.once('open',()=>{
     console.log('connected');
 }, 'error',() => {
-    console.log("kkkkkkk");
+    console.log("error");
 });
 
 
