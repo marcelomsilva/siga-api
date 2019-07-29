@@ -1,7 +1,7 @@
 'use strict';
 const mongoose = require('mongoose')
 //const urlDb = 'mongodb://db:27017/siga'
-const urlDb = 'mongodb://localhost:27017/siga'
+const urlDb = 'mongodb://root:root@mongodb:27017/siga'
 mongoose.connect(urlDb, {useNewUrlParser: true}).then(() => {
     console.log("Connected")
 }).catch(err => {
